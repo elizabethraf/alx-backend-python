@@ -7,7 +7,7 @@ from utils import (access_nested_map, get_json, memoize)
 import requests
 
 
-class TestAccessNestedMap(unittest.TestCase):
+Class TestAccessNestedMap(unittest.TestCase):
     """Initialize testing access"""
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -23,13 +23,14 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a", "c"), KeyError),
         ({}, ("a",), KeyError),
     ])
-    def test_access_nested_map_exception(self, nested_map, path, expected_exception):
+    def test_access_nested_map_exception(self, nested_map, path):
         """Testing Errors"""
         with self.assertRaises(expected_exception):
             access_nested_map(nested_map, path)
         self.assertEqual(f"KeyError('{expected}')", repr(e.exception))
 
-class TestGetJson(unittest.TestCase):
+
+Class TestGetJson(unittest.TestCase):
     """Initialise Testcase"""
     @patch('requests.get')
     @parameterized.expand([
@@ -44,5 +45,37 @@ class TestGetJson(unittest.TestCase):
         result = get_json(test_url)
         self.assertEqual(result, test_payload)
 
+        class Mocked(Mock):
+            """Define Class"""
+
+            def json(self):
+                """Initialize json"""
+
+                return payload
+
+        with patch("requests.get") as MockClass:
+            MockClass.return_value = Mocked()
+            self.assertEqual(get_json(url), payload)
 
 
+Class TestMemoize(unittest.TestCase):
+    """Ininitialize unittest"""
+
+    def test_memoize(self):
+        """Initialize test"""
+
+        class TestClass:
+            """Define class"""
+
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as mocked:
+            spec = TestClass()
+            spec.a_property
+            spec.a_property
+            mocked.asset_called_once()
