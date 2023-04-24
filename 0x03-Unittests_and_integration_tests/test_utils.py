@@ -2,6 +2,9 @@
 """Display utils.access_nested_map function"""
 import unittest
 from parameterized import parameterized
+from unittest.mock import patch
+from utils import (access_nested_map, get_json, memoize)
+import requests
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -21,6 +24,10 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",), KeyError),
     ])
     def test_access_nested_map_exception(self, nested_map, path, expected_exception):
+        """Testing Errors"""
         with self.assertRaises(expected_exception):
             access_nested_map(nested_map, path)
+        self.assertEqual(f"KeyError('{expected}')", repr(e.exception))
+
+
 
